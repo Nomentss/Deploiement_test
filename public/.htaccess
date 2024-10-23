@@ -18,9 +18,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
 
-    # Autoriser l'accès au fichier et aux dossiers
-    <Directory />
-        Require all granted
-    </Directory>
+# Set proper permissions on the Laravel directories
+<IfModule mod_dir.c>
+    DirectoryIndex index.php
 </IfModule>
