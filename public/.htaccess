@@ -18,4 +18,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Autoriser l'accès au fichier et aux dossiers
+    <Directory />
+        Require all granted
+    </Directory>
 </IfModule>
