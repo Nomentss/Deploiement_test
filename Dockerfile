@@ -17,4 +17,18 @@ COPY . /var/www/html
 RUN composer install --no-dev --optimize-autoloader
 
 # Donner les permissions nécessaires
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
+# Activer le module rewrite d'Apache pour Laravel
+RUN a2enmod rewrite
+
+# Copier votre fichier de configuration Apache personnalisé
+COPY ./docker/apache/apache2.conf /etc/apache2/apache2.conf
+
+# Exposer le port 80
+EXPOSE 80
+
+# Lancer Apache
+CMD ["apache2-foreground"]
