@@ -5,22 +5,10 @@
 
     RewriteEngine On
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Serve existing files if they exist
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>
+    RewriteCond %{REQUEST_FILENAME} !-d
 
-# Set proper permissions on the Laravel directories
-<IfModule mod_dir.c>
-    DirectoryIndex index.php
+    # Otherwise, route the request to index.php
+    RewriteRule ^ index.php [L]
 </IfModule>
